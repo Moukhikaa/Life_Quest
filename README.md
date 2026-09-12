@@ -1,35 +1,140 @@
-# LIFE//QUEST
+# Life Quest
 
-> Turn your real life into a game.
+Life Quest is a full-stack RPG productivity app that turns real-world tasks into quests. Users can create goals, choose quest difficulty, earn XP and gold, build streaks, unlock achievements, and track progress through a character-style dashboard.
 
-LIFE//QUEST is an RPG productivity web application where real-world tasks become quests, completions earn XP and gold, and consistent action grows a persistent character sheet.
+**Live Demo:** [https://life-quest-g7slnwgyx-moukhikas-projects.vercel.app/](https://life-quest-g7slnwgyx-moukhikas-projects.vercel.app/)
+
+## Overview
+
+Most productivity tools treat tasks like chores. Life Quest makes daily progress feel like a game: every completed quest gives rewards, every streak builds momentum, and long-term effort turns into visible character growth.
+
+The app includes a React frontend, an Express/tRPC backend, Drizzle ORM database models, OAuth-based authentication, and Vercel deployment support.
 
 ## Features
 
-- Manus OAuth login and account session flow
-- Persistent database-backed quests, rewards, levels, streaks, attributes, transactions, inventory, and achievements
-- Server-verified XP and gold rewards with protected tRPC procedures
-- Create, complete, and abandon quests
-- Non-linear progression: level thresholds grow quadratically with XP
-- Character sheet, weekly history, achievements, item shop, and profile settings
-- Dark and light themes with animated atmospheric backgrounds
-- Responsive desktop and mobile navigation
-- Reduced-motion support and keyboard-reachable controls
+- Quest creation, completion, and abandonment flows
+- Difficulty-based XP and gold rewards
+- Character level progression with non-linear XP thresholds
+- Streak tracking, weekly history, achievements, and profile stats
+- Inventory and shop-style reward system
+- AI chat companion interface
+- Interactive map component support
+- OAuth login and persistent account sessions
+- Protected server procedures for user-specific data
+- Dark and light theme support
+- Responsive layout for desktop and mobile screens
+- Keyboard-friendly controls and reduced-motion support
 
-## Stack
+## Tech Stack
 
-React 19, Vite, TypeScript, Tailwind CSS, Express, tRPC, Drizzle ORM, MySQL/TiDB, Manus OAuth, Framer Motion-compatible CSS motion, and Lucide icons.
+- **Frontend:** React 19, Vite, TypeScript, Tailwind CSS
+- **Backend:** Express, tRPC, Node.js
+- **Database:** Drizzle ORM with MySQL/TiDB-compatible connection support
+- **Auth:** OAuth session flow with secure cookies
+- **UI:** Radix UI, Lucide React, Recharts, Sonner
+- **Testing:** Vitest
+- **Deployment:** Vercel
 
-## Local development
+## Project Structure
+
+```text
+.
+|-- api/                  # Vercel serverless entry point
+|-- client/               # React frontend
+|   |-- public/           # Static frontend assets
+|   `-- src/              # App pages, components, hooks, and styles
+|-- drizzle/              # Database schema, migrations, and metadata
+|-- patches/              # Package patches used by pnpm
+|-- server/               # Express/tRPC backend and server utilities
+|-- shared/               # Shared constants, types, and progression logic
+|-- package.json          # Scripts and dependencies
+|-- pnpm-lock.yaml        # Locked dependency versions
+|-- vercel.json           # Vercel deployment configuration
+`-- vite.config.ts        # Vite app configuration
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20 or newer
+- pnpm 10 or newer
+- A MySQL/TiDB-compatible database connection
+
+### Installation
 
 ```bash
 pnpm install
+```
+
+### Environment Variables
+
+Create a local `.env` file and configure the values needed for your environment:
+
+```bash
+DATABASE_URL=
+JWT_SECRET=
+VITE_APP_ID=
+VITE_OAUTH_PORTAL_URL=
+OAUTH_SERVER_URL=
+OWNER_OPEN_ID=
+BUILT_IN_FORGE_API_URL=
+BUILT_IN_FORGE_API_KEY=
+VITE_FRONTEND_FORGE_API_URL=
+VITE_FRONTEND_FORGE_API_KEY=
+```
+
+`OWNER_OPEN_ID` and the Forge variables are only needed for environments that use those related features.
+
+### Database Setup
+
+Generate and apply database migrations:
+
+```bash
+pnpm db:push
+```
+
+### Run Locally
+
+```bash
 pnpm dev
 ```
 
-The app uses the project-provided environment variables for database and Manus OAuth. See `.env.example` for the expected names.
+The app runs locally at:
+
+```text
+http://localhost:3000
+```
+
+## Available Scripts
+
+```bash
+pnpm dev       # Start the development server
+pnpm build     # Build the frontend and backend
+pnpm start     # Start the production server from the built output
+pnpm check     # Run TypeScript checks
+pnpm test      # Run the Vitest test suite
+pnpm format    # Format the project with Prettier
+pnpm db:push   # Generate and run Drizzle migrations
+```
+
+## Deployment
+
+This project is deployed on Vercel:
+
+[https://life-quest-g7slnwgyx-moukhikas-projects.vercel.app/](https://life-quest-g7slnwgyx-moukhikas-projects.vercel.app/)
+
+For a new deployment:
+
+1. Import the repository into Vercel.
+2. Add the required environment variables in the Vercel project settings.
+3. Make sure the database is reachable from the deployed app.
+4. Run the Drizzle migration workflow before using the production database.
+5. Deploy the app and test the full user flow: login, create quest, complete quest, view rewards, refresh, and log out.
 
 ## Validation
+
+Before submitting or deploying major changes, run:
 
 ```bash
 pnpm check
@@ -37,21 +142,6 @@ pnpm test
 pnpm build
 ```
 
-## Deployment notes
+## License
 
-1. Configure `DATABASE_URL`, `JWT_SECRET`, `VITE_APP_ID`, `OAUTH_SERVER_URL`, `VITE_OAUTH_PORTAL_URL`, and the built-in Manus API variables in the deployment environment.
-2. Run the Drizzle migration workflow before first use.
-3. Verify the live domain over HTTPS because secure OAuth cookies are required.
-4. Test the complete path: landing → signup/login → dashboard → create quest → complete quest → refresh → logout.
-
-## AI assistance disclosure
-
-This project was developed with AI-assisted programming support as a disclosed development aid. Product direction, design decisions, review, testing, and final submission responsibility remain with the project team. Review the hackathon organizer's policy and include the disclosure in the submission if required.
-
-## Final judging checklist
-
-- Confirm the repository is public and contains the full chronological commit history.
-- Confirm the live domain loads without a login-required landing page and that OAuth login works over HTTPS.
-- Record a short walkthrough that demonstrates signup/login, onboarding, quest creation, completion animation, level-up, refresh persistence, shop purchase, light/dark theme switching, and mobile navigation.
-- Disclose AI-assisted development if required by the organizers; do not present generated work as unaided work.
-- Test with keyboard navigation and a mobile device before submission.
+This project is licensed under the MIT License.
